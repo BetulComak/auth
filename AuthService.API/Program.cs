@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Database Bağlantısı
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseSqlServer(connectionString));
 
 // Identity ve IdentityServer ekleniyor
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(o =>
@@ -74,9 +74,13 @@ if (app.Environment.IsDevelopment())
 
     });
 }
-
 app.UseIdentityServer();
 //app.UseAuthorization();
 app.MapControllers();
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.Migrate();
+}
 
 app.Run();
