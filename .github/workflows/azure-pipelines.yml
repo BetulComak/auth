@@ -10,7 +10,7 @@ jobs:
 
     env:
       buildConfiguration: 'Release'
-      dotnetVersion: '9.0.200'  # .NET 9 sürümü
+      dotnetVersion: '9.0.x'  # .NET 9 sürümü
       imageName: 'myapi'  # Docker Image adı
       containerRegistry: 'myregistry.azurecr.io'  # Azure Container Registry (ACR) adı
 
