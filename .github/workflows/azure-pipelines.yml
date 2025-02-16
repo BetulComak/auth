@@ -6,13 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Linux tabanlı build agent kullan
-
-    env:
-      buildConfiguration: 'Release'
-      dotnetVersion: '9.0.x'  # .NET 9 sürümü
-      imageName: 'myapi'  # Docker Image adı
-      containerRegistry: 'myregistry.azurecr.io'  # Azure Container Registry (ACR) adı
+    runs-on: ubuntu-latest
 
     steps:
     - name: 'Checkout'
@@ -34,7 +28,6 @@ jobs:
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'myauth' # App Service adı
-        slot-name: 'production' # Deployment Slot adı
+        app-name: 'myauth'
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         package: './publish'
