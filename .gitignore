@@ -1,0 +1,19 @@
+
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sln.iml
+
+# Build dosyaları
+bin/
+obj/
+out/
+
+# .NET bağımlılıkları
+packages/
+*.nupkg
+project.lock.json
+global.json
