@@ -1,1 +1,45 @@
-name:Publish
+on:
+  push:
+    branches:
+      - main  # Ana branch'e push yapıldığında tetiklenir
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Linux tabanlı build agent kullan
+
+    env:
+      buildConfiguration: 'Release'
+      dotnetVersion: '9.0.200'  # .NET 9 sürümü
+      imageName: 'myapi'  # Docker Image adı
+      containerRegistry: 'myregistry.azurecr.io'  # Azure Container Registry (ACR) adı
+
+    steps:
+    - name: 'Setup .NET 9 SDK'
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '$(dotnetVersion)'
+
+    - name: 'Build Solution'
+      run: |
+        dotnet restore
+        dotnet build --configuration $(buildConfiguration)
+
+    - name: 'Run Unit Tests'
+      run: |
+        dotnet test --configuration $(buildConfiguration) --logger trx
+
+    - name: 'Build Docker Image'
+      run: |
+        docker build -t $(containerRegistry)/$(imageName):latest .
+
+    - name: 'Push Docker Image to ACR'
+      env:
+        ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+        ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+      run: |
+        echo "$(ACR_PASSWORD)" | docker login $(containerRegistry) -u "$(ACR_USERNAME)" --password-stdin
+        docker push $(containerRegistry)/$(imageName):latest
+
+    - name: 'Deploy to Azure App Service'
+      run: |
+        az webapp config container set --name myapp --resource-group myresourcegroup --docker-custom-image-name $(containerRegistry)/$(imageName):latest
