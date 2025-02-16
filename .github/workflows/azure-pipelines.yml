@@ -22,12 +22,14 @@ jobs:
         
     - name: 'Build Solution'
       run: |
-        dotnet restore ./File.Auth.Service.sln
-        dotnet build ./File.Auth.Service.sln --configuration $(buildConfiguration)
+        dotnet restore 
+        dotnet build  --configuration $(buildConfiguration)
+      working-directory: ${{ github.event.repository.name }}
     
     - name: 'Publish'
       run: |
-        dotnet publish ./File.Auth.Service.sln --configuration $(buildConfiguration) --no-build
+        dotnet publish  --configuration $(buildConfiguration) --no-build
+      working-directory: ${{ github.event.repository.name }}
 
     # - name: 'Run Unit Tests'
     #   run: |
