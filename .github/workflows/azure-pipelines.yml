@@ -30,7 +30,15 @@ jobs:
     
     - name: 'Publish'
       run: |
-        dotnet publish ./AuthService.API/AuthService.API.csproj --configuration Release --no-build
+        dotnet publish ./AuthService.API/AuthService.API.csproj --configuration Release --no-build --output './publish'
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'myauth' # App Service adı
+        slot-name: 'production' # Deployment Slot adı
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        package: './publish'
+        action: 'stop' # App Service durdurulur
 
     # - name: 'Run Unit Tests'
     #   run: |
