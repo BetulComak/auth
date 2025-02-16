@@ -32,7 +32,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(o =>
 
 builder.Services.AddIdentityServer(options =>
 {
-    options.IssuerUri = "http://localhost:5229";
+    options.IssuerUri = "https://myauth-bebhf3f4czfdb9fe.canadacentral-01.azurewebsites.net";
     options.EmitStaticAudienceClaim = true;
 })
    .AddAspNetIdentity<IdentityUser>()
