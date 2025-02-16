@@ -26,11 +26,11 @@ jobs:
     - name: 'Build Solution'
       run: |
         dotnet restore ./AuthService.API/AuthService.API.csproj
-        dotnet build ./AuthService.API/AuthService.API.csproj --configuration $(buildConfiguration)
+        dotnet build ./AuthService.API/AuthService.API.csproj --configuration Release
     
     - name: 'Publish'
       run: |
-        dotnet publish ./AuthService.API/AuthService.API.csproj --configuration $(buildConfiguration) --no-build
+        dotnet publish ./AuthService.API/AuthService.API.csproj --configuration Release --no-build
 
     # - name: 'Run Unit Tests'
     #   run: |
