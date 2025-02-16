@@ -22,12 +22,12 @@ jobs:
         
     - name: 'Build Solution'
       run: |
-        dotnet restore
-        dotnet build --configuration $(buildConfiguration)
+        dotnet restore ./File.Auth.Service.sln
+        dotnet build ./File.Auth.Service.sln --configuration $(buildConfiguration)
     
     - name: 'Publish'
       run: |
-        dotnet publish --configuration $(buildConfiguration) --no-build
+        dotnet publish ./File.Auth.Service.sln --configuration $(buildConfiguration) --no-build
 
     # - name: 'Run Unit Tests'
     #   run: |
