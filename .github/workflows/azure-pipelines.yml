@@ -25,6 +25,7 @@ jobs:
     - name: 'Publish'
       run: |
         dotnet publish ./AuthService.API/AuthService.API.csproj --configuration Release --no-build --output './publish'
+        
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
