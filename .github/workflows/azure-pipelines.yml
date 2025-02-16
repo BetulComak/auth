@@ -22,14 +22,12 @@ jobs:
         
     - name: 'Build Solution'
       run: |
-        dotnet restore 
-        dotnet build  --configuration $(buildConfiguration)
-      working-directory: ${{ github.event.repository.name }}
+        dotnet restore ./AuthService.API/AuthService.API.csproj
+        dotnet build ./AuthService.API/AuthService.API.csproj --configuration $(buildConfiguration)
     
     - name: 'Publish'
       run: |
-        dotnet publish  --configuration $(buildConfiguration) --no-build
-      working-directory: ${{ github.event.repository.name }}
+        dotnet publish ./AuthService.API/AuthService.API.csproj --configuration $(buildConfiguration) --no-build
 
     # - name: 'Run Unit Tests'
     #   run: |
