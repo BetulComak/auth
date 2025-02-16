@@ -63,24 +63,16 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// 📌 Swagger UI ekleyelim
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthService API v1");
-        options.RoutePrefix = string.Empty; // Ana sayfa olarak açılması için
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthService API v1");
+    options.RoutePrefix = string.Empty; // Ana sayfa olarak açılması için
 
-    });
-}
+});
+
 app.UseIdentityServer();
 //app.UseAuthorization();
 app.MapControllers();
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    context.Database.Migrate();
-}
 
 app.Run();
