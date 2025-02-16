@@ -21,11 +21,16 @@ jobs:
       run: |
         dotnet restore ./AuthService.API/AuthService.API.csproj
         dotnet build ./AuthService.API/AuthService.API.csproj --configuration Release
+
+    - name: 'Apply Database Migrations' 
+      run: |
+          dotnet tool install --global dotnet-ef
+          dotnet ef database update -c AppDbContext -p ./AuthService.API/AuthService.API.csproj -s ./AuthService.API/AuthService.API.csproj
     
     - name: 'Publish'
       run: |
         dotnet publish ./AuthService.API/AuthService.API.csproj --configuration Release --no-build --output './publish'
-        
+
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
