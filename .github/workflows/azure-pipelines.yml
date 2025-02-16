@@ -2,7 +2,7 @@ name: Publish
 on:
   push:
     branches:
-      - main  # Ana branch'e push yapıldığında tetiklenir
+      - master  # Ana branch'e push yapıldığında tetiklenir
 
 jobs:
   build:
